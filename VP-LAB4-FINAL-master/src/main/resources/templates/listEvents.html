@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Event Booking Page - Welcome and Choose an Event</title>
+    <style type="text/css">
+        body {
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #d4c0af;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            text-align: left;
+            color: #8a6e58;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #8a6e58;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            padding-left: 20px;
+            width: 100%;
+        }
+
+        label {
+            font-size: 1.1rem;
+            color: #8a6e58;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container select,
+        .form-container button[type="submit"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 10px 0;
+            border: 2px solid #8a6e58;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #fff;
+        }
+
+        .form-container input[type="text"]:focus,
+        .form-container input[type="number"]:focus,
+        .form-container select:focus {
+            outline: none;
+            border-color: #7a5b45;
+            box-shadow: 0 0 5px rgba(138, 110, 88, 0.5);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button[type="submit"] {
+            width: auto;
+            padding: 0.8rem 1.2rem;
+            margin: 10px 0;
+            background-color: #8a6e58;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #7a5b45;
+            transform: scale(1.05);
+        }
+
+        button[type="submit"]:active {
+            background-color: #6b4e37;
+            transform: scale(1);
+        }
+
+        .event-info {
+            background-color: #faf9f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .btn-add-event {
+            background-color: #8a6e58;
+            border-color: #8a6e58;
+            color: white;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-add-event:hover {
+            background-color: #7a5b45;
+            border-color: #7a5b45;
+        }
+
+        .btn-edit, .btn-delete, .btn-add-event {
+            width: auto;
+        }
+
+        .form-container form {
+            width: 100%;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container select {
+            width: 100%;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            border-radius: 8px;
+        }
+
+        .btn-edit {
+            background-color: #8a6e58;
+            border-color: #8a6e58;
+            margin-right: 10px;
+        }
+
+        .btn-edit:hover {
+            background-color: #7a5b45;
+            border-color: #7a5b45;
+        }
+
+        .btn-delete {
+            background-color: #d16f5b;
+            border-color: #d16f5b;
+        }
+
+        .btn-delete:hover {
+            background-color: #c45e4b;
+            border-color: #c45e4b;
+        }
+
+        .btn-delete-custom {
+            background-color: #c45e4b;
+            border-color: #c45e4b;
+        }
+
+        .btn-delete-custom:hover {
+            background-color: #b14b3a;
+            border-color: #b14b3a;
+        }
+
+        /* Ensure all form elements are the same size */
+        .form-container input,
+        .form-container select,
+        .form-container button {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e59232f0a1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Event Booking App</h1>
+</header>
+<main>
+    <div class="form-container">
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            The event is not found.
+        </div>
+        <h2>Search for an Event</h2>
+        <form action="/events" method="get">
+            <label for='search'>Search event:</label>
+            <input type="text" name="searchName" id="search" placeholder="Search an event">
+            <label for='minRating'>Search by minimum rating:</label>
+            <input type='number' name="minRating" id="minRating" placeholder="Search by rating">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <h2>Filter by Location:</h2>
+    <form th:method="GET" th:action="@{/events/by-location}">
+        <select name="locationId" class="location-dropdown">
+            <option value="" disabled selected>Select a location</option>
+            <option th:each="location : ${locations}"
+                    th:value="${location.getId()}"
+                    th:text="${location.name}">
+            </option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <div>
+        <a th:href="@{'/events/add-event'}"
+           sec:authorize="hasRole('ADMIN')"
+           class="btn btn-sm btn-add-event">
+            <i class="fa fa-plus"></i> Add Event
+        </a>
+    </div>
+
+    <div class="form-container">
+        <h2>Choose an Event:</h2>
+        <form th:action="@{/eventBooking}" th:method="post">
+            <div th:each="event : ${events}">
+                <label>
+                    <input type="radio" th:value="${event.name}" name="eventName" required>
+                    <div class="event-info">
+                        <b>Name:</b> <span th:text="${event.name}"></span><br>
+                        <b>Description:</b> <span th:text="${event.description}"></span><br>
+                        <b>Rating:</b> <span th:text="${event.popularityScore}"></span><br>
+                        <b>Location:</b> <span th:text="${event.getLocation().name}"></span><br>
+                    </div>
+
+                    <div class="form-actions">
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{'/events/edit/{id}' (id=${event.id})}" class="btn btn-sm btn-edit">
+                            <i class="fa fa-edit"></i> Edit
+                        </a>
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{'/events/delete/{id}' (id=${event.id})}" class="btn btn-sm btn-delete">
+                            <i class="fa fa-trash"></i> Delete
+                        </a>
+                    </div>
+                </label>
+            </div>
+
+            <h2>Choose Number of Tickets:</h2>
+            <input type="number" name="numTickets" min="1" max="10" required><br/>
+            <br/>
+            <label for="nameAttendee">Name of booking:</label>
+            <input type="text" name="nameAttendee" id="nameAttendee"><br/>
+            <br/>
+            <label for="clientIpAddress">IP Address:</label>
+            <span th:text="${clientIpAddress}" id="clientIpAddress"></span>
+            <input type="hidden" name="clientIpAddress" th:value="${clientIpAddress}"><br/>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .confirmation-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #8a6e58;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .details {
+            background-color: #faf9f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            color: #8a6e58;
+            font-weight: bold;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #8a6e58;
+            font-weight: bold;
+            margin-top: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div class="confirmation-container">
+    <h1>Booking Confirmation</h1>
+    <div class="details">
+        <p><span class="highlight">Event Name:</span> <span th:text="${booking.eventName}"></span></p>
+        <p><span class="highlight">Client IP Address:</span> <span th:text="${booking.getAttendeeAddress()}"></span></p>
+        <p><span class="highlight">Number of Tickets:</span> <span th:text="${booking.numberOfTickets}"></span></p>
+        <p><span class="highlight">Attendee's Name:</span> <span th:text="${booking.attendeeName}"></span></p>
+    </div>
+    <a th:href="@{/events}" class="back-link">Back to Events</a>
+</div>
+</body>
+</html>

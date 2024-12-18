@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Details</title>
+    <style type="text/css">
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            margin: 0;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #8a6e58;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        h2 {
+            color: #8a6e58;
+            font-size: 1.8rem;
+            margin-top: 20px;
+            padding-left: 20px;
+        }
+
+        .event-info {
+            background-color: #faf9f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .event-info b {
+            color: #8a6e58;
+        }
+
+        .comment-section, .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form-container textarea, .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 2px solid #8a6e58;
+            background-color: #fff;
+            font-size: 1rem;
+        }
+
+        button[type="submit"] {
+            padding: 0.8rem 1.2rem;
+            background-color: #8a6e58;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: auto;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #7a5b45;
+        }
+
+        .alert {
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .comment-section p {
+            margin: 5px 0;
+        }
+
+        .comment-section strong {
+            color: #8a6e58;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="'Details for ' + ${event.name}"></h1>
+
+<div class="event-info">
+    <p><strong>Description:</strong> <span th:text="${event.description}"></span></p>
+    <p><strong>Location:</strong> <span th:text="${event.location.name}"></span></p>
+    <p><strong>Rating:</strong> <span th:text="${event.popularityScore}"></span></p>
+</div>
+
+<h2>Comments</h2>
+<div th:each="comment : ${event.comments}" class="comment-section">
+    <p><strong>User:</strong> <span th:text="${comment.userName}"></span></p>
+    <p><span th:text="${comment.content}"></span></p>
+</div>
+
+<h2>Add a Comment</h2>
+<div class="form-container">
+    <form th:action="@{'/events/' + ${event.id} + '/comments'}" method="post">
+        <input type="hidden" name="eventId" th:value="${event.id}">
+        <label for="userName">Name:</label>
+        <input type="text" id="userName" name="userName" required>
+
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" required></textarea>
+
+        <button type="submit">Submit Comment</button>
+    </form>
+</div>
+
+<div th:if="${successMessage}" class="alert alert-success">
+    <p th:text="${successMessage}"></p>
+</div>
+<div th:if="${errorMessage}" class="alert alert-danger">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+</body>
+</html>

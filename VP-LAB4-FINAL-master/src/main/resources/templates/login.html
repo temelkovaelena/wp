@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #6b4e37, #d4c0af);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 44px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-container label {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 90%;
+            padding: 0.9rem;
+            margin: 12px 0;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #ffffff;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.9rem;
+            margin-top: 15px;
+            background-color: #ffffff;
+            color: #6b4e37;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #f7f0e6;
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            color: #ff6b6b;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .alert-success {
+            color: #51cf66;
+        }
+    </style>
+
+</head>
+<body>
+<header>
+
+</header>
+<main>
+    <div class="form-container">
+        <div th:if="${param.error}" class="alert">
+            Invalid username or password!
+        </div>
+
+        <div th:if="${param.logout}" class="alert alert-success">
+            You have been logged out successfully.
+        </div>
+
+        <h2>Login</h2>
+        <form th:action="@{/login}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
